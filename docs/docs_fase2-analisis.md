@@ -30,7 +30,7 @@ class CC admin
 class EXT ext
 ```
 
-*Leyenda: naranja = usuario final · verde = infraestructura IoT en campo · morado = operación interna · rosa = sistemas externos de terceros.*
+*naranja = usuario final · verde = infraestructura IoT en campo · morado = operación interna · rosa = sistemas externos de terceros.*
 
 ### 1.1 Actores Principales
 * **Usuario Final (Conductor / Peatón):**

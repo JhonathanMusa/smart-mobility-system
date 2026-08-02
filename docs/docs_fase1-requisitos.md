@@ -29,7 +29,7 @@ flowchart TD
     class MAS admin
 ```
 
-*Leyenda: verde = procesamiento en tiempo real (sensores, tráfico, semáforos) · naranja = interacción con el usuario final (rutas, alertas) · morado = administración y gobernanza del sistema.*
+*verde = procesamiento en tiempo real (sensores, tráfico, semáforos) · naranja = interacción con el usuario final (rutas, alertas) · morado = administración y gobernanza del sistema.*
 
 1. **Módulo de Gestión de Sensores (MGS):** Responsable de la ingesta de telemetría IoT, validación de integridad, normalización de datos y filtrado de ruido.
 2. **Módulo de Gestión del Tráfico (MGT):** Procesa el flujo vehicular instantáneo, calcula niveles de servicio (LOS) y detecta cuellos de botella e incidentes en tiempo real.
