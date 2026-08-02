@@ -12,10 +12,10 @@ El sistema interactúa con actores humanos, dispositivos físicos y plataformas 
 flowchart TD
 SMS["🚦 Smart Mobility System (SMS)"]
 
-SMS --> USR["🧑‍🦽 Usuario final\nConductor o peatón, vía móvil"]
-SMS --> IOT["📡 Sensores IoT y semáforos\nTelemetría y actuadores"]
-SMS --> CC["🖥️ Centro de control\nOperador humano"]
-SMS --> EXT["🌐 Servicios externos\nGIS, clima y emergencias"]
+SMS --> USR["Usuario final\nConductor o peatón, vía móvil"]
+SMS --> IOT["Sensores IoT y semáforos\nTelemetría y actuadores"]
+SMS --> CC["Centro de control\nOperador humano"]
+SMS --> EXT["Servicios externos\nGIS, clima y emergencias"]
 
 classDef hub fill:#0F6E56,stroke:#04342C,stroke-width:2px,color:#FFFFFF,font-weight:bold;
 classDef core fill:#5DCAA5,stroke:#0F6E56,stroke-width:1.5px,color:#04342C;
