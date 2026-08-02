@@ -1,9 +1,5 @@
 # Fase 3: Construcción de Vistas Arquitectónicas
 
-Especificación y modelos visuales para la representación del **Smart Mobility System (SMS)**.
-
----
-
 ## 1. Vista de Casos de Uso (UML)
 
 La Vista de Casos de Uso define el comportamiento del sistema desde el punto de vista de los actores involucrados.

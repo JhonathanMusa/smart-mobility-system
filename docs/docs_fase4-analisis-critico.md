@@ -1,9 +1,5 @@
 # Fase 4: Análisis Arquitectónico y Reflexión Crítica
 
-Respuestas y justificación analítica sobre las decisiones de diseño arquitectónico del **Smart Mobility System (SMS)**.
-
----
-
 ## 1. ¿Por qué son necesarias múltiples vistas?
 
 Un sistema distribuido y complejo no puede ser comprendido ni diseñado mediante una única representación gráfica. Intentar incluir todos los requerimientos, componentes hardware, modelos de datos e interacciones de usuarios en un solo diagrama genera ambigüedad, desorden y falta de claridad técnica.

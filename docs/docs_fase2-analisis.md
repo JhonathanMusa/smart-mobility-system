@@ -1,9 +1,5 @@
 # Fase 2: Análisis del Sistema
 
-Documento de análisis de actores, dominio del problema y restricciones operacionales para el **Smart Mobility System (SMS)**.
-
----
-
 ## 1. Identificación de Actores
 
 El sistema interactúa con actores humanos, dispositivos físicos y plataformas externas:
