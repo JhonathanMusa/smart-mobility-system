@@ -1,0 +1,82 @@
+@startuml vista-conceptual
+!theme plain
+
+skinparam nodeStyle rectangle
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam ArrowColor #5F5E5A
+skinparam ArrowFontColor #2C2C2A
+skinparam ArrowFontSize 11
+
+skinparam node {
+  BorderThickness 1.5
+  FontStyle bold
+}
+
+skinparam rectangle {
+  BorderThickness 1
+}
+
+skinparam component {
+  BorderThickness 1
+}
+
+skinparam queue {
+  BackgroundColor #7F77DD
+  BorderColor #534AB7
+  FontColor #FFFFFF
+}
+
+skinparam database {
+  BackgroundColor #7F77DD
+  BorderColor #534AB7
+  FontColor #FFFFFF
+}
+
+node "Dominio Captura y Edge" as EdgeDomain #E1F5EE {
+  [Sensores Viales / Cámaras] as EdgeSensors #5DCAA5
+  [Actuadores Semáforos] as EdgeLights #5DCAA5
+}
+
+node "Dominio Sistema Central (Cloud)" as CoreDomain #EEEDFE {
+  rectangle "Capa de Entrada" as L1 #CECBF6 {
+    [API Gateway & IoT Ingress] as Ingress #AFA9EC
+  }
+  rectangle "Plataforma de Eventos" as L2 #CECBF6 {
+    queue "Event Backbone (Kafka)" as Backbone
+  }
+  rectangle "Motor de Negocio y Análisis" as L3 #CECBF6 {
+    [Servicio de Tráfico y Rutas] as Analytics #AFA9EC
+  }
+  rectangle "Persistencia" as L4 #CECBF6 {
+    database "Bases de Datos (Serie Temporal & Grafo)" as Storage
+  }
+}
+
+node "Dominio Consumidores & Externos" as ExtDomain #FAECE7 {
+  [App Ciudadanos] as MobileApp #F0997B
+  [Dashboard Control Operativo] as ControlDash #F0997B
+  [APIs Emergencia / Clima] as ExtServices #F4C0D1
+}
+
+EdgeSensors --> Ingress : Telemetría (MQTT/gRPC)
+Ingress --> Backbone : Flujo de Eventos
+Backbone --> Analytics : Procesamiento en Streaming
+Analytics <--> Storage : Lectura/Escritura
+
+Analytics --> MobileApp : REST / WebSockets
+Analytics --> ControlDash : REST / WebSockets
+Analytics <--> ExtServices : APIs REST
+Analytics --> EdgeLights : Comandos Control (gRPC)
+
+legend right
+  <back:#5DCAA5>   </back> Dominio Edge (captura física)
+  <back:#AFA9EC>   </back> Dominio Central (procesamiento cloud)
+  <back:#F0997B>   </back> Consumidores finales
+  <back:#F4C0D1>   </back> Sistemas externos de terceros
+endlegend
+
+@enduml

@@ -1,0 +1,91 @@
+@startuml vista-logica
+!theme plain
+skinparam componentStyle uml2
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam ArrowColor #5F5E5A
+skinparam ArrowFontColor #2C2C2A
+skinparam ArrowFontSize 11
+
+skinparam package {
+  BorderThickness 1.5
+  FontStyle bold
+}
+
+skinparam component {
+  BorderThickness 1
+}
+
+skinparam queue {
+  BorderThickness 1
+}
+
+skinparam database {
+  BorderThickness 1
+}
+
+package "Capa de Presentación" #FAECE7 {
+  [Aplicación Móvil] as App #F0997B
+  [Dashboard Centro de Control] as Dash #F0997B
+}
+
+package "Capa de Integración y Seguridad" #F1EFE8 {
+  [API Gateway / Auth Service] as GW #B4B2A9
+}
+
+package "Capa de Negocio (Microservicios)" #E1F5EE {
+  [Procesamiento de Datos IoT] as MGS #5DCAA5
+  [Gestión de Tráfico] as MGT #5DCAA5
+  [Gestión de Semáforos] as MGSem #5DCAA5
+  [Gestión de Rutas] as MGR #5DCAA5
+  [Gestión de Alertas] as MGA #5DCAA5
+  [Análisis Predictivo ML] as ML #5DCAA5
+}
+
+package "Bus de Eventos" #EEEDFE {
+  queue "Kafka Event Broker" as Kafka #7F77DD
+}
+
+package "Capa de Datos y Persistencia" #EEEDFE {
+  database "TimescaleDB (Telemetría)" as DB_Time #7F77DD
+  database "PostGIS / Neo4j (Grafo Rutas)" as DB_Geo #7F77DD
+  database "Redis Cache" as Cache #7F77DD
+}
+
+package "Servicios Externos" #FBEAF0 {
+  [Servicio GIS / Mapas] as GIS #F4C0D1
+  [Servicio Clima] as Weather #F4C0D1
+}
+
+App --> GW : HTTPS / WSS
+Dash --> GW : HTTPS / WSS
+
+GW --> MGR
+GW --> MGA
+GW --> MGSem
+
+MGS --> Kafka : Publica eventos telemetría
+Kafka --> MGT : Consume eventos
+MGT --> MGSem : Notifica nivel de servicio
+MGT --> MGA : Dispara alertas congestión
+MGT --> ML : Alimenta modelos
+
+MGR --> DB_Geo
+MGS --> DB_Time
+MGR --> Cache
+
+ML ..> Weather : Consulta datos
+MGR ..> GIS : Importa mapas
+
+legend right
+  <back:#F0997B>   </back> Presentación (apps de usuario)
+  <back:#B4B2A9>   </back> Integración y seguridad
+  <back:#5DCAA5>   </back> Microservicios de negocio
+  <back:#7F77DD>   </back> Bus de eventos y persistencia
+  <back:#F4C0D1>   </back> Servicios externos de terceros
+endlegend
+
+@enduml

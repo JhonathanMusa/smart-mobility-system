@@ -1,0 +1,65 @@
+@startuml vista-procesos
+!theme plain
+autonumber
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam roundCorner 8
+
+skinparam sequence {
+  ArrowColor #5F5E5A
+  ArrowFontColor #2C2C2A
+  ArrowFontSize 11
+  LifeLineBorderColor #B4B2A9
+  LifeLineBackgroundColor #F1EFE8
+  ParticipantBorderColor #5F5E5A
+  ParticipantFontColor #2C2C2A
+  ActorBorderColor #5F5E5A
+  ActorFontColor #2C2C2A
+  GroupBorderColor #993C1D
+  GroupFontColor #4A1B0C
+  GroupBackgroundColor #FAECE7
+  GroupHeaderFontColor #4A1B0C
+  DividerBorderColor #5F5E5A
+  DividerBackgroundColor #F1EFE8
+}
+
+actor "Sensor IoT" as Sensor #5DCAA5
+participant "Ingesta IoT" as Ingestion #B4B2A9
+participant "Gestión de Tráfico" as Trafico #5DCAA5
+participant "Gestión Semáforos" as Semaforo #5DCAA5
+participant "Actuador Semáforo" as PhysicalSemaforo #5DCAA5
+participant "Gestión Alertas" as Alertas #F0997B
+actor "App Móvil" as App #F0997B
+
+Sensor -> Ingestion : Transmitir Telemetría (Tráfico Alto)
+activate Ingestion #B4B2A9
+
+Ingestion -> Trafico : Publicar Evento TelemetriaRecibida
+deactivate Ingestion
+activate Trafico #5DCAA5
+
+Trafico -> Trafico : Evaluar Umbral Congestión (CEP)
+
+par Ajuste Semafórico
+    Trafico -> Semaforo : Notificar Congestión Detectada
+    activate Semaforo #5DCAA5
+    Semaforo -> Semaforo : Calcular Nueva Fase Verde
+    Semaforo -> PhysicalSemaforo : Comando AmpliarFaseVerde()
+    deactivate Semaforo
+else Notificación a Usuarios
+    Trafico -> Alertas : Emitir Evento AlertaCongestión
+    deactivate Trafico
+    activate Alertas #F0997B
+    Alertas -> App : Enviar Push Notification Geolocalizada
+    deactivate Alertas
+end
+
+legend right
+  <back:#5DCAA5>   </back> Procesamiento en tiempo real (IoT / tráfico)
+  <back:#B4B2A9>   </back> Capa de integración
+  <back:#F0997B>   </back> Notificación al usuario final
+endlegend
+
+@enduml

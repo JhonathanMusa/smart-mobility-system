@@ -1,0 +1,72 @@
+@startuml vista-casos-de-uso
+!theme plain
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+
+skinparam ArrowColor #5F5E5A
+skinparam ArrowFontColor #2C2C2A
+skinparam ArrowFontSize 11
+
+skinparam usecase {
+  BackgroundColor #E1F5EE
+  BorderColor #0F6E56
+  FontColor #04342C
+  BorderThickness 1
+}
+
+skinparam actor {
+  BorderColor #5F5E5A
+  FontColor #2C2C2A
+  BorderThickness 1
+}
+
+skinparam rectangle {
+  BackgroundColor #F1EFE8
+  BorderColor #5F5E5A
+  FontColor #2C2C2A
+  BorderThickness 1
+}
+
+left to right direction
+
+actor "Usuario (Conductor/Peatón)" as User #F0997B
+actor "Sistema de Sensores IoT" as Sensors #5DCAA5
+actor "Semáforo Inteligente" as TrafficLight #5DCAA5
+actor "Operador Centro Control" as Operator #AFA9EC
+actor "Servicios de Emergencia" as Emergency #F4C0D1
+
+rectangle "Smart Mobility System (SMS)" {
+  usecase "CU01. Consultar Ruta Óptima" as CU01
+  usecase "CU02. Recibir Alerta de Congestión" as CU02
+  usecase "CU03. Transmitir Datos de Telemetría" as CU03 #E1F5EE
+  usecase "CU04. Ajustar Ciclos de Semáforos" as CU04 #E1F5EE
+  usecase "CU05. Validar Sesión" as CU05 #D3D1C7
+  usecase "CU06. Intervenir Control Semafórico Manual" as CU06 #EEEDFE
+  usecase "CU07. Notificar Incidente Crítico" as CU07 #FBEAF0
+}
+
+User --> CU01
+User --> CU02
+Sensors --> CU03
+CU04 --> TrafficLight
+Operator --> CU06
+CU07 --> Emergency
+
+CU01 ..> CU05 : <<include>>
+CU06 ..> CU05 : <<include>>
+CU02 .> CU01 : <<extend>>
+CU07 .> CU06 : <<extend>>
+
+legend right
+  <back:#F0997B>   </back> Usuario final
+  <back:#5DCAA5>   </back> Hardware IoT (sensores / semáforos)
+  <back:#AFA9EC>   </back> Operación interna
+  <back:#F4C0D1>   </back> Sistemas externos
+  <back:#D3D1C7>   </back> Caso de uso compartido (<<include>>)
+endlegend
+
+@enduml
