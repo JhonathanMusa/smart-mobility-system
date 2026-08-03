@@ -159,7 +159,7 @@ flowchart LR
     class X3 ext
 ```
 
-> Los `.png` se generan a partir de los `.puml` en `diagrams/src/` (podés renderizarlos con PlantUML, el plugin de VS Code, o [plantuml.com/plantuml](http://www.plantuml.com/plantuml/uml/)). Los diagramas Mermaid de esta página se renderizan solos en GitHub.
+> Los `.png` se generan a partir de los `.puml` en `diagrams/src/` (se pueden renderizar con PlantUML, el plugin de VS Code, o [plantuml.com/plantuml](http://www.plantuml.com/plantuml/uml/)). Los diagramas Mermaid de esta página se renderizan solos en GitHub.
 
 ---
 
