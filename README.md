@@ -102,43 +102,54 @@ Las 4 vistas siguen el modelo 4+1 de Kruchten, y todas comparten la misma paleta
 
 ```mermaid
 flowchart LR
-    subgraph Edge ["1. CAPTURA Y EDGE"]
-        E1[Sensores Viales]
-        E2[Semáforos]
+    subgraph Usuarios ["1. USUARIOS"]
+        U1[App Ciudadanos]
+        U2[Dashboard Centro de Control]
     end
 
-    subgraph Core ["2. SISTEMA CENTRAL (CLOUD)"]
+    subgraph Sensores ["2. SENSORES"]
+        S1[Sensores Viales]
+        S2[Semáforos]
+    end
+
+    subgraph Core ["3. SISTEMA CENTRAL"]
         C1[Ingestor IoT]
         C2[Event Broker - Kafka]
         C3[Motor Analytics & Routing]
         C4[Bases de Datos]
     end
 
-    subgraph External ["3. CONSUMIDORES & EXTERNO"]
-        X1[App Ciudadanos]
-        X2[Centro Control]
-        X3[Servicios Emergencia / Mapas]
+    subgraph Externos ["4. SERVICIOS EXTERNOS"]
+        X1[Mapas / GIS]
+        X2[Clima]
+        X3[Emergencias]
     end
 
-    E1 -->|MQTT / gRPC| C1
+    S1 -->|MQTT / gRPC| C1
     C1 --> C2
     C2 --> C3
     C3 <--> C4
-    C3 -->|REST / WebSockets| X1
-    C3 -->|REST / WebSockets| X2
-    C3 <-->|APIs| X3
-    C3 -->|Comandos| E2
+    C3 -->|REST / WebSockets| U1
+    C3 -->|REST / WebSockets| U2
+    C3 <-->|APIs| X1
+    C3 <-->|APIs| X2
+    C3 -->|Notifica| X3
+    C3 -->|Comandos| S2
 
-    style Edge fill:#E1F5EE,stroke:#0F6E56,stroke-width:1.5px,color:#04342C
+    style Usuarios fill:#FAECE7,stroke:#993C1D,stroke-width:1.5px,color:#4A1B0C
+    style Sensores fill:#E1F5EE,stroke:#0F6E56,stroke-width:1.5px,color:#04342C
     style Core fill:#EEEDFE,stroke:#534AB7,stroke-width:1.5px,color:#26215C
-    style External fill:#FAECE7,stroke:#993C1D,stroke-width:1.5px,color:#4A1B0C
+    style Externos fill:#FBEAF0,stroke:#993556,stroke-width:1.5px,color:#4B1528
 
-    classDef edge fill:#5DCAA5,stroke:#0F6E56,color:#04342C;
+    classDef usr fill:#F0997B,stroke:#993C1D,color:#4A1B0C;
+    classDef sen fill:#5DCAA5,stroke:#0F6E56,color:#04342C;
     classDef core fill:#7F77DD,stroke:#534AB7,color:#FFFFFF;
-    classDef ext fill:#F0997B,stroke:#993C1D,color:#4A1B0C;
+    classDef ext fill:#F4C0D1,stroke:#993556,color:#4B1528;
 
-    class E1 edge
-    class E2 edge
+    class U1 usr
+    class U2 usr
+    class S1 sen
+    class S2 sen
     class C1 core
     class C2 core
     class C3 core
@@ -148,7 +159,7 @@ flowchart LR
     class X3 ext
 ```
 
-> Los `.png` se generan a partir de los `.puml` en `diagrams/src/` (se pueden renderizar con PlantUML, el plugin de VS Code, o [plantuml.com/plantuml](http://www.plantuml.com/plantuml/uml/)). Los diagramas Mermaid de esta página se renderizan solos en GitHub.
+> Los `.png` se generan a partir de los `.puml` en `diagrams/src/` (podés renderizarlos con PlantUML, el plugin de VS Code, o [plantuml.com/plantuml](http://www.plantuml.com/plantuml/uml/)). Los diagramas Mermaid de esta página se renderizan solos en GitHub.
 
 ---
 
@@ -157,7 +168,7 @@ flowchart LR
 - **Casos de uso** → Muestra qué puede hacer cada actor con el sistema: el usuario pide rutas y recibe alertas, los sensores mandan telemetría, el operador puede intervenir manualmente un semáforo, y cuando hay un incidente crítico se avisa a los servicios de emergencia.
 - **Vista lógica** → Es la foto de "quién hace qué" a nivel de software: presentación (app, dashboard) → gateway → microservicios de negocio → bus de eventos → persistencia → integraciones externas. Cada capa tiene una responsabilidad clara y no se pisa con las demás.
 - **Vista de procesos** → Sigue paso a paso un escenario real: un sensor detecta tráfico alto, el sistema evalúa si es congestión, y en paralelo ajusta el semáforo y manda una alerta push. Es la vista que muestra la concurrencia y el orden de los eventos.
-- **Vista conceptual** → El mapa grande: tres dominios (Edge, Cloud, Consumidores/Externo) y cómo se conectan entre sí. Sirve para entender dónde vive cada pieza sin meterse en el detalle de código.
+- **Vista conceptual** → El mapa grande: cuatro dominios (Usuarios, Sensores, Sistema central y Servicios externos) y cómo se conectan entre sí. Sirve para entender dónde vive cada pieza sin meterse en el detalle de código.
 
 ---
 

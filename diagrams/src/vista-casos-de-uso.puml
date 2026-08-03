@@ -38,6 +38,7 @@ actor "Sistema de Sensores IoT" as Sensors #5DCAA5
 actor "Semáforo Inteligente" as TrafficLight #5DCAA5
 actor "Operador Centro Control" as Operator #AFA9EC
 actor "Servicios de Emergencia" as Emergency #F4C0D1
+actor "Servicios Externos\n(Mapas / Clima)" as ExtServices #F4C0D1
 
 rectangle "Smart Mobility System (SMS)" {
   usecase "CU01. Consultar Ruta Óptima" as CU01
@@ -60,6 +61,7 @@ CU01 ..> CU05 : <<include>>
 CU06 ..> CU05 : <<include>>
 CU02 .> CU01 : <<extend>>
 CU07 .> CU06 : <<extend>>
+CU01 ..> ExtServices : <<use>>
 
 legend right
   <back:#F0997B>   </back> Usuario final

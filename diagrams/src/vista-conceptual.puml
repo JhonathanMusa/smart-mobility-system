@@ -36,12 +36,12 @@ skinparam database {
   FontColor #FFFFFF
 }
 
-node "Dominio Captura y Edge" as EdgeDomain #E1F5EE {
+node "Dominio Sensores" as SensorDomain #E1F5EE {
   [Sensores Viales / Cámaras] as EdgeSensors #5DCAA5
   [Actuadores Semáforos] as EdgeLights #5DCAA5
 }
 
-node "Dominio Sistema Central (Cloud)" as CoreDomain #EEEDFE {
+node "Dominio Sistema Central" as CoreDomain #EEEDFE {
   rectangle "Capa de Entrada" as L1 #CECBF6 {
     [API Gateway & IoT Ingress] as Ingress #AFA9EC
   }
@@ -56,10 +56,13 @@ node "Dominio Sistema Central (Cloud)" as CoreDomain #EEEDFE {
   }
 }
 
-node "Dominio Consumidores & Externos" as ExtDomain #FAECE7 {
+node "Dominio Usuarios" as UserDomain #FAECE7 {
   [App Ciudadanos] as MobileApp #F0997B
   [Dashboard Control Operativo] as ControlDash #F0997B
-  [APIs Emergencia / Clima] as ExtServices #F4C0D1
+}
+
+node "Dominio Servicios Externos" as ExtDomain #FBEAF0 {
+  [APIs Emergencia / Mapas / Clima] as ExtServices #F4C0D1
 }
 
 EdgeSensors --> Ingress : Telemetría (MQTT/gRPC)
@@ -73,10 +76,10 @@ Analytics <--> ExtServices : APIs REST
 Analytics --> EdgeLights : Comandos Control (gRPC)
 
 legend right
-  <back:#5DCAA5>   </back> Dominio Edge (captura física)
-  <back:#AFA9EC>   </back> Dominio Central (procesamiento cloud)
-  <back:#F0997B>   </back> Consumidores finales
-  <back:#F4C0D1>   </back> Sistemas externos de terceros
+  <back:#5DCAA5>   </back> Dominio Sensores (captura física)
+  <back:#AFA9EC>   </back> Dominio Sistema Central (procesamiento cloud)
+  <back:#F0997B>   </back> Dominio Usuarios
+  <back:#F4C0D1>   </back> Dominio Servicios Externos
 endlegend
 
 @enduml

@@ -43,6 +43,7 @@ package "Capa de Negocio (Microservicios)" #E1F5EE {
   [Gestión de Rutas] as MGR #5DCAA5
   [Gestión de Alertas] as MGA #5DCAA5
   [Análisis Predictivo ML] as ML #5DCAA5
+  [Integración Externa] as IntExt #5DCAA5
 }
 
 package "Bus de Eventos" #EEEDFE {
@@ -77,8 +78,10 @@ MGR --> DB_Geo
 MGS --> DB_Time
 MGR --> Cache
 
-ML ..> Weather : Consulta datos
-MGR ..> GIS : Importa mapas
+ML --> IntExt : Solicita datos externos
+MGR --> IntExt : Solicita datos externos
+IntExt ..> Weather : Consulta clima
+IntExt ..> GIS : Importa mapas
 
 legend right
   <back:#F0997B>   </back> Presentación (apps de usuario)
