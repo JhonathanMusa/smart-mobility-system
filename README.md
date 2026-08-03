@@ -30,12 +30,12 @@ El sistema se divide en 6 módulos que hacen cada uno lo suyo:
 flowchart TD
 SMS["🚦 Smart Mobility System (SMS)"]
 
-SMS --> MGS["📡 Gestión de Sensores\nIngesta y validación IoT"]
-SMS --> MGT["🚗 Gestión del Tráfico\nFlujo y congestión"]
-SMS --> MGSem["🚥 Gestión de Semáforos\nTiempos adaptativos"]
-SMS --> MGR["🧭 Gestión de Rutas\nEnrutamiento dinámico"]
-SMS --> MGA["🔔 Gestión de Alertas\nDespacho de notificaciones"]
-SMS --> MAS["🔐 Administración\nIdentidad y auditoría"]
+SMS --> MGS["Gestión de Sensores\nIngesta y validación IoT"]
+SMS --> MGT["Gestión del Tráfico\nFlujo y congestión"]
+SMS --> MGSem["Gestión de Semáforos\nTiempos adaptativos"]
+SMS --> MGR["Gestión de Rutas\nEnrutamiento dinámico"]
+SMS --> MGA["Gestión de Alertas\nDespacho de notificaciones"]
+SMS --> MAS["Administración\nIdentidad y auditoría"]
 
 classDef hub fill:#0F6E56,stroke:#04342C,stroke-width:2px,color:#FFFFFF,font-weight:bold;
 classDef core fill:#5DCAA5,stroke:#0F6E56,stroke-width:1.5px,color:#04342C;
